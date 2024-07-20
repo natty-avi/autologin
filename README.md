@@ -1,65 +1,77 @@
-# autologin
-
-#Login automation Application
+# Travel Company Automation
 
 ## Overview
+This project aims to automate the process of logging in to various partner websites for a travel company. The application has two main roles: Admin and Agent. Admins can manage partner credentials, while agents can log in to partner websites without seeing the credentials.
 
-This application is designed to automate login process. It consists of a frontend built with React.js and a backend built with Node.js and Express.js. The application uses PostgreSQL as the database and Puppeteer for automating login to partner websites.
-
-## Features
-
-- Admin panel to add and manage partner websites.
-- Agent dashboard to log in and can access all websites.
-- Secure storage of login credentials.
-- Responsive design using Bootstrap.
-
-## Prerequisites
-
-- Node.js and npm
-- PostgreSQL
+## Technologies Used
+- **Frontend**: React.js
+- **Backend**: Node.js, Express.js
+- **Database**: PostgreSQL
+- **Automation**: Puppeteer
+- **Authentication**: JWT
 
 ## Setup Instructions
 
-### 1. Clone the Repository
+### Prerequisites
+- Node.js
+- PostgreSQL
 
-```bash
-git clone <repository-url>
-cd travel-booking-management
+### Backend Setup
 
-### 2. Run the Setup Script
-chmod +x setup.sh
-./setup.sh
+1. **Clone the repository**:
+    ```sh
+    git clone https://github.com/yourusername/travel-company-automation.git
+    cd travel-company-automation/backend
+    ```
 
-### 3.Configuration
-The setup script will prompt you for the following information:
+2. **Install dependencies**:
+    ```sh
+    npm install
+    ```
 
-PostgreSQL database name
-PostgreSQL database user
-PostgreSQL database password
-PostgreSQL host (default: localhost)
+3. **Create `.env` file**:
+    ```sh
+    touch .env
+    ```
 
-### 4.Start the Application
+    Add the following content to `.env`:
+    ```
+    DATABASE_URL=your_postgresql_connection_string
+    JWT_SECRET=your_jwt_secret
+    PORT=5000
+    ```
 
-cd backend
-npm start
+4. **Run the server**:
+    ```sh
+    npm start
+    ```
 
-cd frontend
-npm start
+### Frontend Setup
 
-### 5. Access the Application
-Admin Panel: http://localhost:3000
-Agent Dashboard: http://localhost:3000/agent
+1. **Navigate to the frontend directory**:
+    ```sh
+    cd ../frontend
+    ```
 
-Deployment
-For production deployment, ensure to secure sensitive data, use HTTPS, and configure proper server security settings.
+2. **Install dependencies**:
+    ```sh
+    npm install
+    ```
 
+3. **Run the frontend server**:
+    ```sh
+    npm start
+    ```
 
-Troubleshooting
-If you encounter any issues, please check the logs for detailed error messages and ensure that all prerequisites are installed correctly.
+### Usage
 
-License
-This project is licensed under the MIT License.
+1. **Register as an Admin**:
+    - Access the registration endpoint via Postman or any API client to create an admin user.
 
-
-With these steps and updates, the application should now be fully responsive, and the setup process is automated for ease of deployment.
-
+    ```http
+    POST http://localhost:5000/api/auth/register
+    {
+        "username": "admin",
+        "password": "password",
+        "role": "admin"
+    }
