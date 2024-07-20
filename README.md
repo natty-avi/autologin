@@ -8,8 +8,8 @@ This application is designed to automate login process. It consists of a fronten
 
 ## Features
 
-- Admin panel to add and manage partner airlines.
-- Agent dashboard to log in and book flights.
+- Admin panel to add and manage partner websites.
+- Agent dashboard to log in and can access all websites.
 - Secure storage of login credentials.
 - Responsive design using Bootstrap.
 
