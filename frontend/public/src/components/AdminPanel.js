@@ -4,9 +4,17 @@ import api from '../services/api';
 
 const AdminPanel = () => {
     const [partners, setPartners] = useState([]);
-    const [form, setForm] = useState({ name: '', login_url: '', username: '', password: '' });
+    const [form, setForm] = useState({
+        name: '',
+        login_url: '',
+        username: '',
+        password: '',
+        username_selector: '',
+        password_selector: '',
+        login_button_selector: ''
+    });
 
-    const fetchPartners = async () => { // Extract fetchPartners function
+    const fetchPartners = async () => {
         const response = await api.get('/admin/partners');
         setPartners(response.data);
     };
@@ -22,7 +30,15 @@ const AdminPanel = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         await api.post('/admin/partners', form);
-        setForm({ name: '', login_url: '', username: '', password: '' });
+        setForm({
+            name: '',
+            login_url: '',
+            username: '',
+            password: '',
+            username_selector: '',
+            password_selector: '',
+            login_button_selector: ''
+        });
         fetchPartners();
     };
 
@@ -34,6 +50,9 @@ const AdminPanel = () => {
                 <input type="text" name="login_url" value={form.login_url} onChange={handleInputChange} placeholder="Login URL" />
                 <input type="text" name="username" value={form.username} onChange={handleInputChange} placeholder="Username" />
                 <input type="password" name="password" value={form.password} onChange={handleInputChange} placeholder="Password" />
+                <input type="text" name="username_selector" value={form.username_selector} onChange={handleInputChange} placeholder="Username Selector" />
+                <input type="text" name="password_selector" value={form.password_selector} onChange={handleInputChange} placeholder="Password Selector" />
+                <input type="text" name="login_button_selector" value={form.login_button_selector} onChange={handleInputChange} placeholder="Login Button Selector" />
                 <button type="submit">Add Partner</button>
             </form>
             <h2>Partner List</h2>
@@ -47,4 +66,3 @@ const AdminPanel = () => {
 };
 
 export default AdminPanel;
-
