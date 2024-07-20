@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+//import axios from 'axios';
 import api from '../services/api';
 
 const AgentDashboard = () => {
@@ -19,13 +19,13 @@ const AgentDashboard = () => {
     };
 
     return (
-        <div>
+        <div className="container">
             <h1>Agent Dashboard</h1>
-            <ul>
+            <ul className="list-group">
                 {partners.map(partner => (
-                    <li key={partner.id}>
+                    <li key={partner.id} className="list-group-item">
                         {partner.name}
-                        <button onClick={() => handleLogin(partner.id)}>Login</button>
+                        <button onClick={() => handleLogin(partner.id)} className="btn btn-primary">Login</button>
                     </li>
                 ))}
             </ul>

@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
 const pool = require('../config/db');
+const bcrypt = require('bcrypt');
 
 
 const loginToPartnerSite = async (partnerId) => {
@@ -18,7 +19,7 @@ const loginToPartnerSite = async (partnerId) => {
 
     await page.click(partner.login_button_selector);
     await page.waitForNavigation();
-    
+
     // Take a screenshot or perform any other actions
     await page.screenshot({ path: 'screenshot.png' });
 
