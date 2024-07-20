@@ -6,11 +6,12 @@ const AdminPanel = () => {
     const [partners, setPartners] = useState([]);
     const [form, setForm] = useState({ name: '', login_url: '', username: '', password: '' });
 
+    const fetchPartners = async () => { // Extract fetchPartners function
+        const response = await api.get('/admin/partners');
+        setPartners(response.data);
+    };
+
     useEffect(() => {
-        const fetchPartners = async () => {
-            const response = await api.get('/admin/partners');
-            setPartners(response.data);
-        };
         fetchPartners();
     }, []);
 
@@ -22,8 +23,7 @@ const AdminPanel = () => {
         e.preventDefault();
         await api.post('/admin/partners', form);
         setForm({ name: '', login_url: '', username: '', password: '' });
-        const response = await api.get('/admin/partners');
-        setPartners(response.data);
+        fetchPartners();
     };
 
     return (
@@ -47,3 +47,4 @@ const AdminPanel = () => {
 };
 
 export default AdminPanel;
+
