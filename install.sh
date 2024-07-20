@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Git repository URL
+git_repo_url="https://github.com/natty-avi/autologin.git"
+
 # Function to install Node.js and npm
 install_node() {
     echo "Installing Node.js and npm..."
@@ -60,9 +63,6 @@ setup_frontend() {
 
 # Main function
 main() {
-    # Prompt user for Git repository URL
-    read -p "Enter Git repository URL: " git_repo_url
-
     # Prompt user for database connection details
     read -p "Enter PostgreSQL database name: " db_name
     read -p "Enter PostgreSQL database user: " db_user
