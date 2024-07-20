@@ -6,7 +6,7 @@ git_repo_url="https://github.com/natty-avi/autologin.git"
 # Function to install Node.js and npm
 install_node() {
     echo "Installing Node.js and npm..."
-    curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+    curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
     sudo apt-get install -y nodejs
     echo "Node.js and npm installed successfully."
 }
@@ -48,10 +48,20 @@ setup_backend() {
         exit 1
     fi
     npm install
+
+    # Create .env.example if it does not exist
     if [ ! -f ".env.example" ]; then
-        echo "Error: .env.example not found in backend directory."
-        exit 1
+        echo "Creating .env.example in backend directory."
+        cat <<EOL >.env.example
+DB_USER=your_db_user
+DB_HOST=your_db_host
+DB_NAME=your_db_name
+DB_PASSWORD=your_db_password
+DB_PORT=5432
+JWT_SECRET=your_jwt_secret
+EOL
     fi
+
     cp .env.example .env
     # Set JWT secret in .env file
     echo "JWT_SECRET=$jwt_secret" >> .env
@@ -73,6 +83,19 @@ setup_frontend() {
         exit 1
     fi
     npm install
+
+    # Create .env.example if it does not exist
+    if [ ! -f ".env.example" ]; then
+        echo "Creating .env.example in frontend directory."
+        cat <<EOL >.env.example
+REACT_APP_API_URL=http://localhost:5000
+REACT_APP_OTHER_VARIABLE=your_value
+EOL
+    fi
+
+    cp .env.example .env
+    # Update .env file with API URL and other frontend-specific environment variables
+    sed -i "s|http://localhost:5000|$api_url|g" .env
     cd ..
     echo "Frontend setup completed."
 }
@@ -85,6 +108,10 @@ main() {
     read -p "Enter PostgreSQL database password: " db_password
     read -p "Enter PostgreSQL host (default: localhost): " db_host
     db_host=${db_host:-localhost}
+
+    # Prompt user for API URL
+    read -p "Enter API URL (default: http://localhost:5000): " api_url
+    api_url=${api_url:-http://localhost:5000}
 
     # Generate JWT secret
     jwt_secret=$(openssl rand -base64 32 | tr -d '\n')
