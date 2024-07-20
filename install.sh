@@ -6,7 +6,7 @@ git_repo_url="https://github.com/natty-avi/autologin.git"
 # Function to install Node.js and npm
 install_node() {
     echo "Installing Node.js and npm..."
-    curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+    curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
     sudo apt-get install -y nodejs
     echo "Node.js and npm installed successfully."
 }
