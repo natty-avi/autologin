@@ -6,7 +6,7 @@ git_repo_url="https://github.com/natty-avi/autologin.git"
 # Function to install Node.js and npm
 install_node() {
     echo "Installing Node.js and npm..."
-    curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+    curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -
     sudo apt-get install -y nodejs
     echo "Node.js and npm installed successfully."
 }
@@ -30,6 +30,10 @@ create_database() {
 # Function to clone the Git repository
 clone_repository() {
     echo "Cloning Git repository..."
+    if [ -d "project" ]; then
+        echo "Removing existing project directory..."
+        rm -rf project
+    fi
     git clone $git_repo_url project
     cd project
     echo "Repository cloned successfully."
@@ -39,7 +43,15 @@ clone_repository() {
 setup_backend() {
     echo "Setting up backend..."
     cd backend
+    if [ ! -f "package.json" ]; then
+        echo "Error: package.json not found in backend directory."
+        exit 1
+    fi
     npm install
+    if [ ! -f ".env.example" ]; then
+        echo "Error: .env.example not found in backend directory."
+        exit 1
+    fi
     cp .env.example .env
     # Set JWT secret in .env file
     echo "JWT_SECRET=$jwt_secret" >> .env
@@ -56,6 +68,10 @@ setup_backend() {
 setup_frontend() {
     echo "Setting up frontend..."
     cd frontend
+    if [ ! -f "package.json" ]; then
+        echo "Error: package.json not found in frontend directory."
+        exit 1
+    fi
     npm install
     cd ..
     echo "Frontend setup completed."
