@@ -26,20 +26,20 @@ const getPartnerById = async (id) => {
     return result.rows[0];
 };
 
-const createPartner = async (name, login_url, username, password) => {
-    const result = await pool.query(
-        'INSERT INTO partners (name, login_url, username, password) VALUES ($1, $2, $3, $4) RETURNING *',
-        [name, login_url, username, password]
+const addPartner = async (name, login_url, username, password, username_selector, password_selector, login_button_selector) => {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await pool.query(
+        'INSERT INTO partners (name, login_url, username, password, username_selector, password_selector, login_button_selector) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+        [name, login_url, username, hashedPassword, username_selector, password_selector, login_button_selector]
     );
-    return result.rows[0];
 };
 
-const updatePartner = async (id, name, login_url, username, password) => {
-    const result = await pool.query(
-        'UPDATE partners SET name = $1, login_url = $2, username = $3, password = $4 WHERE id = $5 RETURNING *',
-        [name, login_url, username, password, id]
+const updatePartner = async (id, name, login_url, username, password, username_selector, password_selector, login_button_selector) => {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await pool.query(
+        'UPDATE partners SET name = $1, login_url = $2, username = $3, password = $4, username_selector = $5, password_selector = $6, login_button_selector = $7 WHERE id = $8',
+        [name, login_url, username, hashedPassword, username_selector, password_selector, login_button_selector, id]
     );
-    return result.rows[0];
 };
 
 const deletePartner = async (id) => {
@@ -49,7 +49,7 @@ const deletePartner = async (id) => {
 module.exports = {
     getAllPartners,
     getPartnerById,
-    createPartner,
+    addPartner,
     updatePartner,
     deletePartner
 };
