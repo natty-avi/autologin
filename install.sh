@@ -70,6 +70,10 @@ EOL
     sed -i "s/your_db_host/$db_host/g" .env
     sed -i "s/your_db_name/$db_name/g" .env
     sed -i "s/your_db_password/$db_password/g" .env
+
+    # Fix vulnerabilities
+    npm audit fix
+
     cd ..
     echo "Backend setup completed."
 }
@@ -96,6 +100,10 @@ EOL
     cp .env.example .env
     # Update .env file with API URL and other frontend-specific environment variables
     sed -i "s|http://localhost:5000|$api_url|g" .env
+
+    # Fix vulnerabilities
+    npm audit fix
+
     cd ..
     echo "Frontend setup completed."
 }
