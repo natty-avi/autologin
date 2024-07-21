@@ -24,6 +24,7 @@ create_database() {
     sudo -u postgres psql -c "CREATE DATABASE $db_name;"
     sudo -u postgres psql -c "CREATE USER $db_user WITH ENCRYPTED PASSWORD '$db_password';"
     sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE $db_name TO $db_user;"
+    sudo -u postgres psql -c "ALTER USER $db_user WITH SUPERUSER;"
     echo "PostgreSQL database and user created successfully."
 }
 
@@ -56,7 +57,7 @@ setup_backend() {
 DB_USER=$db_user
 DB_HOST=$db_host
 DB_NAME=$db_name
-DB_PASSWORD='$db_password'
+DB_PASSWORD=$db_password
 DB_PORT=5432
 JWT_SECRET=$jwt_secret
 EOL
