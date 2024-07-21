@@ -49,30 +49,43 @@ setup_backend() {
     fi
     npm install
 
-    # Create .env.example if it does not exist
-    if [ ! -f ".env.example" ]; then
-        echo "Creating .env.example in backend directory."
-        cat <<EOL >.env.example
-DB_USER=your_db_user
-DB_HOST=your_db_host
-DB_NAME=your_db_name
-DB_PASSWORD=your_db_password
+    # Create .env if it does not exist
+    if [ ! -f ".env" ]; then
+        echo "Creating .env in backend directory."
+        cat <<EOL >.env
+DB_USER=$db_user
+DB_HOST=$db_host
+DB_NAME=$db_name
+DB_PASSWORD=$db_password
 DB_PORT=5432
-JWT_SECRET=your_jwt_secret
+JWT_SECRET=$jwt_secret
 EOL
     fi
 
-    cp .env.example .env
-    # Set JWT secret in .env file
-    echo "JWT_SECRET=$jwt_secret" >> .env
-    # Update .env file with database connection details
-    sed -i "s/your_db_user/$db_user/g" .env
-    sed -i "s/your_db_host/$db_host/g" .env
-    sed -i "s/your_db_name/$db_name/g" .env
-    sed -i "s/your_db_password/$db_password/g" .env
-
-    # Fix vulnerabilities
-    npm audit fix
+    # Create default users
+    echo "Creating default users..."
+    node -e "
+    const bcrypt = require('bcryptjs');
+    const { Pool } = require('pg');
+    require('dotenv').config();
+    const pool = new Pool();
+    (async () => {
+        const client = await pool.connect();
+        try {
+            const hashedPassword = await bcrypt.hash('admin123', 10);
+            await client.query(
+                \`INSERT INTO users (username, password, role) VALUES ('admin', '\$1', 'admin') ON CONFLICT (username) DO NOTHING\`,
+                [hashedPassword]
+            );
+            console.log('Default admin user created with username: admin and password: admin123');
+        } catch (err) {
+            console.error(err);
+        } finally {
+            client.release();
+        }
+        pool.end();
+    })();
+    "
 
     cd ..
     echo "Backend setup completed."
@@ -88,21 +101,14 @@ setup_frontend() {
     fi
     npm install
 
-    # Create .env.example if it does not exist
-    if [ ! -f ".env.example" ]; then
-        echo "Creating .env.example in frontend directory."
-        cat <<EOL >.env.example
-REACT_APP_API_URL=http://localhost:5000
+    # Create .env if it does not exist
+    if [ ! -f ".env" ]; then
+        echo "Creating .env in frontend directory."
+        cat <<EOL >.env
+REACT_APP_API_URL=$api_url
 REACT_APP_OTHER_VARIABLE=your_value
 EOL
     fi
-
-    cp .env.example .env
-    # Update .env file with API URL and other frontend-specific environment variables
-    sed -i "s|http://localhost:5000|$api_url|g" .env
-
-    # Fix vulnerabilities
-    npm audit fix
 
     cd ..
     echo "Frontend setup completed."
@@ -130,7 +136,9 @@ main() {
     clone_repository
     setup_backend
     setup_frontend
-    echo "Server setup completed successfully."
+    echo "Server setup completed successfully. You can log in using the following credentials:"
+    echo "Admin Username: admin"
+    echo "Admin Password: admin123"
 }
 
 # Run main function
