@@ -10,18 +10,18 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-scripts": "5.0.1",
-    "@testing-library/react": "^16.0.0"
+    "react": "latest",
+    "react-dom": "latest",
+    "react-scripts": "latest",
+    "@testing-library/react": "latest"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.9",
-    "@babel/preset-env": "^7.24.8",
-    "@babel/plugin-transform-private-methods": "^7.24.7",
-    "@babel/plugin-transform-optional-chaining": "^7.24.8",
-    "@babel/plugin-transform-numeric-separator": "^7.24.7",
-    "@babel/plugin-transform-nullish-coalescing-operator": "^7.24.7",
-    "@babel/plugin-transform-class-properties": "^7.24.7"
+    "@babel/core": "latest",
+    "@babel/preset-env": "latest",
+    "@babel/plugin-transform-private-methods": "latest",
+    "@babel/plugin-transform-optional-chaining": "latest",
+    "@babel/plugin-transform-numeric-separator": "latest",
+    "@babel/plugin-transform-nullish-coalescing-operator": "latest",
+    "@babel/plugin-transform-class-properties": "latest"
   }
 }
