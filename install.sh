@@ -56,26 +56,46 @@ setup_backend() {
 DB_USER=$db_user
 DB_HOST=$db_host
 DB_NAME=$db_name
-DB_PASSWORD=$db_password
+DB_PASSWORD='$db_password'
 DB_PORT=5432
 JWT_SECRET=$jwt_secret
 EOL
     fi
 
-    # Create default users
-    echo "Creating default users..."
+    # Run database migrations
     node -e "
-    const bcrypt = require('bcryptjs');
     const { Pool } = require('pg');
+    const bcrypt = require('bcrypt');
     require('dotenv').config();
-    const pool = new Pool();
+    const pool = new Pool({
+        user: process.env.DB_USER,
+        host: process.env.DB_HOST,
+        database: process.env.DB_NAME,
+        password: process.env.DB_PASSWORD,
+        port: process.env.DB_PORT,
+    });
     (async () => {
         const client = await pool.connect();
         try {
+            await client.query(\`
+                CREATE TABLE IF NOT EXISTS users (
+                    id SERIAL PRIMARY KEY,
+                    username VARCHAR(255) UNIQUE NOT NULL,
+                    password VARCHAR(255) NOT NULL,
+                    role VARCHAR(50) NOT NULL
+                );
+                CREATE TABLE IF NOT EXISTS partners (
+                    id SERIAL PRIMARY KEY,
+                    name VARCHAR(255) NOT NULL,
+                    login_url VARCHAR(255) NOT NULL,
+                    username VARCHAR(255) NOT NULL,
+                    password VARCHAR(255) NOT NULL,
+                    UNIQUE(name, login_url)
+                );
+            \`);
             const hashedPassword = await bcrypt.hash('admin123', 10);
             await client.query(
-                \`INSERT INTO users (username, password, role) VALUES ('admin', '\$1', 'admin') ON CONFLICT (username) DO NOTHING\`,
-                [hashedPassword]
+                \`INSERT INTO users (username, password, role) VALUES ('admin', '\${hashedPassword}', 'admin') ON CONFLICT (username) DO NOTHING\`
             );
             console.log('Default admin user created with username: admin and password: admin123');
         } catch (err) {
@@ -99,7 +119,7 @@ setup_frontend() {
         echo "Error: package.json not found in frontend directory."
         exit 1
     fi
-    npm install
+    npm install --legacy-peer-deps
 
     # Create .env if it does not exist
     if [ ! -f ".env" ]; then
