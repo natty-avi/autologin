@@ -49,6 +49,7 @@ setup_backend() {
         exit 1
     fi
     npm install
+    npm audit fix --force
 
     # Create .env if it does not exist
     if [ ! -f ".env" ]; then
@@ -121,6 +122,7 @@ setup_frontend() {
         exit 1
     fi
     npm install --legacy-peer-deps
+    npm audit fix --force
 
     # Create .env if it does not exist
     if [ ! -f ".env" ]; then
@@ -133,6 +135,30 @@ EOL
 
     cd ..
     echo "Frontend setup completed."
+}
+
+# Function to start the backend and frontend servers
+start_servers() {
+    echo "Starting backend server..."
+    cd backend
+    nohup npm start &> backend.log &
+    cd ..
+
+    echo "Starting frontend server..."
+    cd frontend
+    nohup npm start &> frontend.log &
+    cd ..
+
+    echo "Servers started successfully."
+}
+
+# Function to display access details
+display_access_details() {
+    echo "Setup completed successfully. You can log in using the following credentials:"
+    echo "Admin Username: admin"
+    echo "Admin Password: admin123"
+    echo "Access the frontend at: http://$server_ip:3000"
+    echo "Access the backend at: http://$server_ip:5000"
 }
 
 # Main function
@@ -151,15 +177,17 @@ main() {
     # Generate JWT secret
     jwt_secret=$(openssl rand -base64 32 | tr -d '\n')
 
+    # Get server IP address
+    server_ip=$(hostname -I | awk '{print $1}')
+
     install_node
     install_postgresql
     create_database
     clone_repository
     setup_backend
     setup_frontend
-    echo "Server setup completed successfully. You can log in using the following credentials:"
-    echo "Admin Username: admin"
-    echo "Admin Password: admin123"
+    start_servers
+    display_access_details
 }
 
 # Run main function
