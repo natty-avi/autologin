@@ -59,7 +59,6 @@ DB_USER=$db_user
 DB_HOST=$db_host
 DB_NAME=$db_name
 DB_PASSWORD=$db_password
-authentication='d5'
 DB_PORT=5432
 JWT_SECRET=$jwt_secret
 EOL
@@ -68,7 +67,7 @@ EOL
     # Run database migrations
     node -e "
     const { Pool } = require('pg');
-    const bcrypt = require('bcrypt');
+    const bcrypt = require('bcryptjs');
     require('dotenv').config();
     const pool = new Pool({
         user: process.env.DB_USER,
