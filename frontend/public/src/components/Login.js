@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import api from '../services/api';
+import api from '../services/api.js';
 
 const Login = () => {
     const [username, setUsername] = useState('');

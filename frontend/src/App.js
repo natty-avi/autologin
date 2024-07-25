@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import AdminPanel from './components/AdminPanel';
-import AgentDashboard from './components/AgentDashboard';
+import AdminPanel from './components/AdminPanel.js';
+import AgentDashboard from './components/AgentDashboard.js';
 
 function App() {
   return (

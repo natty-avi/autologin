@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import App from './App';
-import AdminPanel from './components/AdminPanel';
-import AgentDashboard from './components/AgentDashboard';
-import Login from './components/Login';
+import App from './App.js';
+import AdminPanel from './components/AdminPanel.js';
+import AgentDashboard from './components/AgentDashboard.js';
+import Login from './components/Login.js';
 
 const Root = () => (
     <Router>
