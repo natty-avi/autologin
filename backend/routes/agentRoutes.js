@@ -1,8 +1,7 @@
 const express = require('express');
 const { loginToPartner } = require('../controllers/agentController');
-const authMiddleware = require('../middleware/authMiddleware');
 const router = express.Router();
 
-router.post('/login', authMiddleware, loginToPartner);
+router.post('/login', loginToPartner);
 
 module.exports = router;
