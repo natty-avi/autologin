@@ -2,9 +2,22 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { Pool } = require('pg');
+const cors = require('cors');
+
+
 require('dotenv').config();
 
+
+
 const app = express();
+
+const corsOptions = {
+    origin: 'http://192.168.2.42:3000', //(https://your-client-app.com)
+    optionsSuccessStatus: 200,
+  };
+ 
+  app.use(cors(corsOptions));
+
 const pool = new Pool({
     user: process.env.DB_USER,
     host: process.env.DB_HOST,
