@@ -1,13 +1,13 @@
-const express = require('express');
-const {
+import express from 'express';
+import {
     handleCreatePartner,
     handleUpdatePartner,
     handleDeletePartner,
     addPartner, 
     getAllPartners,
     handleGetPartners
-} = require('../controllers/adminController');
-const authMiddleware = require('../middlewares/authMiddleware');
+} from '../controllers/adminController';
+import authMiddleware from '../middlewares/authMiddleware';
 
 const router = express.Router();
 

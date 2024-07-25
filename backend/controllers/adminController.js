@@ -1,14 +1,12 @@
 const {
-    getAllPartners,
-    getPartnerById,
     createPartner,
     updatePartner,
     deletePartner
 } = require('../models/Partner');
 
-const pool = require('../config/db');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+import pool from '../config/db';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 const handleCreatePartner = async (req, res) => {
     const { name, login_url, username, password } = req.body;
@@ -43,7 +41,7 @@ const handleDeletePartner = async (req, res) => {
     }
 };
 
-const handleGetPartners = async (req, res) => {
+const handleGetPartners = async (_, res) => {
     try {
         const partners = await getAllPartners();
         res.json(partners);
@@ -84,9 +82,9 @@ const addPartner = async (req, res) => {
     res.status(201).send('Partner added');
 };
 
-const getAllPartners = async (req, res) => {
+const getAllPartners = async () => {
     const result = await pool.query('SELECT * FROM partners');
-    res.json(result.rows);
+    return result.rows;
 };
 
 module.exports = { register, 

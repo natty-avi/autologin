@@ -1,4 +1,4 @@
-const loginToPartnerSite = require('../scripts/puppeteerLogin');
+import loginToPartnerSite from '../scripts/puppeteerLogin';
 
 const loginToPartner = async (req, res) => {
     const { partnerId } = req.body;

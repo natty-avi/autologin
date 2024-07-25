@@ -1,6 +1,6 @@
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const { getUserByUsername, createUser } = require('../models/User');
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs'; // Replace 'bcrypt' with 'bcryptjs'
+import { getUserByUsername, createUser } from '../models/User';
 
 const handleRegister = async (req, res) => {
     const { username, password, role } = req.body;
@@ -20,7 +20,7 @@ const handleLogin = async (req, res) => {
             return res.status(400).json({ error: 'Invalid username or password' });
         }
 
-        const isValidPassword = await bcrypt.compare(password, user.password);
+        const isValidPassword = await bcrypt.compare(password, user.password); // Update to use 'bcryptjs' instead of 'bcrypt'
         if (!isValidPassword) {
             return res.status(400).json({ error: 'Invalid username or password' });
         }
