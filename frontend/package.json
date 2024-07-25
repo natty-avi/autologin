@@ -13,7 +13,8 @@
     "react": "latest",
     "react-dom": "latest",
     "react-scripts": "latest",
-    "@testing-library/react": "latest"
+    "@testing-library/react": "latest",
+    "axios":"latest"
   },
   "devDependencies": {
     "@babel/core": "latest",
