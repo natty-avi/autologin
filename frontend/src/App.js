@@ -6,10 +6,10 @@ import AgentDashboard from './components/AgentDashboard';
 function App() {
   return (
     <Router>
-      <Switch>
+      <Routes>
         <Route exact path="/" element={<AdminPanel/>} />
         <Route exact path="/agent" element={<AgentDashboard/>} />
-      </Switch>
+      </Routes>
     </Router>
   );
 }
