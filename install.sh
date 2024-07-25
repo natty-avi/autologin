@@ -141,6 +141,7 @@ EOL
 start_servers() {
     echo "Starting backend server..."
     cd backend
+    export NODE_OPTIONS=--openssl-legacy-provider
     nohup npm start &> backend.log &
     cd ..
 
