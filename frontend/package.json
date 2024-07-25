@@ -4,25 +4,38 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "react-scripts start",
+    "start": "export NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "@testing-library/react": "latest",
+    "axios": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "react-scripts": "latest",
-    "@testing-library/react": "latest",
-    "axios":"latest"
+    "react-router-dom": "^6.25.1",
+    "react-scripts": "^3.0.1"
   },
   "devDependencies": {
     "@babel/core": "latest",
-    "@babel/preset-env": "latest",
-    "@babel/plugin-transform-private-methods": "latest",
-    "@babel/plugin-transform-optional-chaining": "latest",
-    "@babel/plugin-transform-numeric-separator": "latest",
+    "@babel/plugin-transform-class-properties": "latest",
     "@babel/plugin-transform-nullish-coalescing-operator": "latest",
-    "@babel/plugin-transform-class-properties": "latest"
+    "@babel/plugin-transform-numeric-separator": "latest",
+    "@babel/plugin-transform-optional-chaining": "latest",
+    "@babel/plugin-transform-private-methods": "latest",
+    "@babel/preset-env": "latest"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
