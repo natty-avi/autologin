@@ -1,17 +1,17 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import AdminPanel from './components/AdminPanel';
-import AgentDashboard from './components/AgentDashboard';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './components/Home';
+import About from './components/About';
+import Contact from './components/Contact';
 
-function App() {
-  return (
+const App = () => (
     <Router>
-      <Switch>
-        <Route exact path="/" component={AdminPanel} />
-        <Route exact path="/agent" component={AgentDashboard} />
-      </Switch>
+        <Routes>
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/" element={<Home />} />
+        </Routes>
     </Router>
-  );
-}
+);
 
 export default App;
