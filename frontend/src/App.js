@@ -7,8 +7,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route exact path="/" element={<AdminPanel/>} />
-        <Route exact path="/agent" element={<AgentDashboard/>} />
+        <Route path="/" element={<AdminPanel/>} />
+        <Route path="/agent" element={<AgentDashboard/>} />
       </Routes>
     </Router>
   );
